@@ -10,99 +10,162 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Builder(
-        builder: (context) {
-          int index = 0;
-          return StatefulBuilder(
-            builder: (context, setState) {
-              return Scaffold(
-                appBar: AppBar(
-                  title: const Text('Myapp'),
-                  backgroundColor: Colors.red.shade700,
-                ),
-                body: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 12, 106, 194),
+          title: const Text('Picture Text Button'),
+        ),
+        body: Center(
+          child: ListView(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(), // เปลี่ยนเพื่อให้เลื่อนได้
+            children: [
+              // Box 1
+              Container(
+                color: const Color.fromARGB(255, 194, 12, 12),
+                width: 350,
+                height: 200,
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(8),
+                child: Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Page ${index + 5}',
-                          style: const TextStyle(fontSize: 24, color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                        const SizedBox(width: 16),
-                        const Text(
-                          'Text 2',
-                          style: TextStyle(fontSize: 24, color: Colors.yellow),
-                        ),
-                        const SizedBox(width: 16),
-                        const Text(
-                          'Text 3',
-                          style: TextStyle(fontSize: 24, color: Colors.green),
-                        ),
-                      ],
+                    Image.asset(
+                      'asset/images/pic.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      color: Colors.blue,
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Hello World',
-                        style: TextStyle(fontSize: 24, color: Colors.white),
+                          const Text(
+                            'Box 1 Title',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            textAlign: TextAlign.left,
+                          ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Click Me'),
+                          ),
+                        ],
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        print('Button pressed!');
-                      },
-                      child: Text('Click Me'),
+                  ],
+                ),
+              ),
+              // Box 2
+              Container(
+                color: const Color.fromARGB(255, 12, 106, 194),
+                width: 350,
+                height: 200,
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'asset/images/pic.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      child: Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 2),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 8,
-                              offset: Offset(2, 4),
-                            ),
-                          ],
-                        ),
-                        clipBehavior: Clip.antiAlias, 
-                        child: Image.asset(
-                          'asset/images/pic.jpg',
-                          fit: BoxFit.cover, // fit to container 
-                        ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Box 2 Title',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Click Me'),
+                          ),
+                        ],
                       ),
                     ),
-
                   ],
                 ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    // ใส่โค้ดที่ต้องการให้ทำเมื่อกดปุ่ม
-                  },
-                  child: const Icon(Icons.add),
-                ),
-                bottomNavigationBar: BottomNavigationBar(
-                  currentIndex: index,
-                  onTap: (i) => setState(() => index = i),
-                  items: const [
-                    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-                    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+              ),
+              // Box 3
+              Container(
+                color: const Color.fromARGB(255, 20, 150, 50),
+                width: 350,
+                height: 200,
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'asset/images/pic.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Box 3 Title',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Click Me'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              );
-            },
-          );
-        },
+              ),
+              // Box 4 (ใหม่ เพิ่มมา)
+              Container(
+                color: const Color.fromARGB(255, 120, 60, 180),
+                width: 350,
+                height: 200,
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'asset/images/pic.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Box 4 Title',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Click Me'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
