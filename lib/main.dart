@@ -74,7 +74,7 @@ class MainApp extends StatelessWidget {
                             ),
                           ],
                         ),
-                        clipBehavior: Clip.antiAlias, // image curve borderRadius
+                        clipBehavior: Clip.antiAlias, 
                         child: Image.asset(
                           'asset/images/pic.jpg',
                           fit: BoxFit.cover, // fit to container 
