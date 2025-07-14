@@ -1,0 +1,56 @@
+สำหรับ user-interface phone-14.png
+
+MyApp
+└── MaterialApp
+    ├── theme: ThemeData (กำหนดสีหลัก AppBarกับปุ่มเมนู)
+    └── home: WelcomePage (StatefulWidget)
+        └── Scaffold
+            ├── AppBar
+            │   ├── centerTitle: true
+            │   └── title: Text("Welcome Page")
+            ├── body: Padding (16)
+            │   └── Column (crossAxisAlignment: start)
+            │       ├── Align (center)
+            │       │   └── Text("This is a short top-level description.")
+            │       ├── SizedBox(height: 10)
+            │       ├── Row (ปุ่ม 2 ปุ่ม)
+            │       │   ├── Expanded
+            │       │   │   └── SizedBox(height: 48)
+            │       │   │       └── ElevatedButton (orange)
+            │       │   ├── SizedBox(width: 16)
+            │       │   └── Expanded
+            │       │       └── SizedBox(height: 48)
+            │       │           └── ElevatedButton (yellow)
+            │       ├── SizedBox(height: 10)
+            │       └── Expanded
+            │           └── Row (ภาพ 2 อัน)
+            │               ├── Expanded
+            │               │   └── Container (blue)
+            │               │       └── Column
+            │               │           ├── Expanded
+            │               │           │   └── ClipRRect (borderRadius)
+            │               │           │       └── Image.network 
+            │               │           ├── SizedBox(height: 8)
+            │               │           ├── Text("First Image")
+            │               │           └── Text("Sample description here")
+            │               └── Expanded
+            │                   └── Container (pink)
+            │                       └── Column
+            │                           ├── Expanded
+            │                           │   └── ClipRRect (borderRadius)
+            │                           │       └── Image.network 
+            │                           ├── SizedBox(height: 8)
+            │                           ├── Text("Second Image")
+            │                           └── Text("Another short text")
+            └── bottomNavigationBar: BottomNavigationBar
+                ├── currentIndex: _currentIndex
+                ├── selectedItemColor: AppTheme.primaryGreen
+                ├── items:
+                │   ├── BottomNavigationBarItem(icon: home, label: Home)
+                │   ├── BottomNavigationBarItem(icon: info, label: About)
+                │   └── BottomNavigationBarItem(icon: settings, label: Setting)
+                └── onTap: setState 
+
+
+ชื่อ-นามสกุล อิรฟาน บือโต 
+เลขรหัสนักศึกษา 6520310138
