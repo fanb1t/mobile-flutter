@@ -1,27 +1,49 @@
-import 'package:flutter/material.dart'; 
-void main() => runApp(MyApp()); 
-class MyApp extends StatelessWidget {
-   @override 
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget { 
+  @override 
   Widget build(BuildContext context) { 
     return MaterialApp( 
-      home: FirstPage(), 
+      initialRoute: '/', 
+      routes: { 
+        '/': (context) => HomePage(), 
+        '/page1': (context) => Page1(), 
+        '/page2': (context) => Page2(), 
+        '/page3': (context) => Page3(), 
+      }, 
     ); 
   } 
 } 
- 
-class FirstPage extends StatelessWidget { 
+
+class HomePage extends StatelessWidget { 
   @override 
   Widget build(BuildContext context) { 
     return Scaffold( 
-      appBar: AppBar(title: Text('First Page')), 
+      appBar: AppBar(title: Text(' Home Page')), 
       body: Center( 
         child: ElevatedButton( 
-          child: Text('Go to Second Page'), 
+          child: Text('Go to Page 1'), 
           onPressed: () { 
-            Navigator.push( 
-              context, 
-              MaterialPageRoute(builder: (context) => SecondPage()), 
-            ); 
+            Navigator.pushNamed(context, '/page1'); 
+          },
+           ), 
+      ), 
+    ); 
+  } 
+} 
+ 
+class Page1 extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return Scaffold( 
+      appBar: AppBar(title: Text('Page 1')), 
+      body: Center( 
+        child: ElevatedButton( 
+          child: Text('Go to Page 2'), 
+          onPressed: () { 
+            Navigator.pushNamed(context, '/page2'); 
           }, 
         ), 
       ), 
@@ -29,19 +51,36 @@ class FirstPage extends StatelessWidget {
   } 
 } 
  
-class SecondPage extends StatelessWidget { 
+class Page2 extends StatelessWidget { 
   @override 
   Widget build(BuildContext context) { 
     return Scaffold( 
-      appBar: AppBar(title: Text('Second Page')), 
+      appBar: AppBar(title: Text('Page 2')), 
       body: Center( 
         child: ElevatedButton( 
-          child: Text('Back'),
-           onPressed: () { 
-            Navigator.pop(context); 
+          child: Text('Go to Page 3'), 
+          onPressed: () { 
+            Navigator.pushNamed(context, '/page3'); 
+          }, 
+        ), 
+      ),
+       ); 
+  } 
+} 
+ 
+class Page3 extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return Scaffold( 
+      appBar: AppBar(title: Text('Page 3')), 
+      body: Center( 
+        child: ElevatedButton( 
+          child: Text('Back to Home Page'), 
+          onPressed: () { 
+            Navigator.popUntil(context, ModalRoute.withName('/')); 
           }, 
         ), 
       ), 
     ); 
   } 
-} 
+}
