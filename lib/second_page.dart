@@ -1,32 +1,31 @@
-import 'package:flutter/material.dart'; 
- 
-class SecondPage extends StatelessWidget { 
-  final String data; 
- 
-  // Constructor that receives data from the previous screen 
-  SecondPage({required this.data}); 
- 
-  @override 
-  Widget build(BuildContext context) { 
-    return Scaffold( 
-      appBar: AppBar(title: Text('Second Page')), 
-      body: Center( 
-        child: Column( 
-          mainAxisAlignment: MainAxisAlignment.center, 
-          children: [ 
-            // Display the received data 
-            Text('Received: $data'), 
-SizedBox(height: 20), 
-ElevatedButton( 
-child: Text('Send back data'), 
-onPressed: () { 
-// Send result back to the previous screen 
-Navigator.pop(context, 'Thanks from Second Page!'); 
-}, 
-), 
-], 
-), 
-), 
-); 
-} 
+import 'package:flutter/material.dart';
+
+class SecondPage extends StatelessWidget {
+  final String username;
+  final int age;
+  final bool isMember;
+
+  // Receive multiple values via constructor
+  SecondPage({
+    required this.username,
+    required this.age,
+    required this.isMember,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Second Page')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Username: $username'),
+            Text('Age: $age'),
+            Text('Member: ${isMember ? "Yes" : "No"}'),
+          ],
+        ),
+      ),
+    );
+  }
 }
