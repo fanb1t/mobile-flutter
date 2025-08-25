@@ -1,140 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+// การแจ้งเตือน rpovider เมื่อมีการเปลี่ยนแปลงข้อมูลจากlogicคำนวณจะส่งแจ้งเตือน UI
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => GenderProvider(),
+      child: MyApp(),
+    ),
+  );
+}
 
+// Main app widget
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HobbyPage());
-  }
-}
-
-// โมเดลแบบ OOP สำหรับเก็บข้อมูลแต่ละ checkbox
-class HobbyItem {
-  final String name;
-  bool selected;
-  HobbyItem(this.name, {this.selected = false});
-}
-
-class HobbyPage extends StatefulWidget {
-  const HobbyPage({super.key});
-  @override
-  State<HobbyPage> createState() => _HobbyPageState();
-}
-
-class _HobbyPageState extends State<HobbyPage> {
-  final List<HobbyItem> _items = [
-    HobbyItem('เล่นกีฬา'),
-    HobbyItem('เล่นเกม'),
-    HobbyItem('อ่านหนังสือ'),
-    HobbyItem('ดูซีรีส์'),
-    HobbyItem('ฟังเพลง'),
-    HobbyItem('เขียนโค้ด'),
-  ];
-
-  final TextEditingController _controller = TextEditingController();
-  final int maxSelected = 4; // เปลี่ยนค่าตามต้องการ
-
-  int get selectedCount => _items.where((e) => e.selected).length;
-
-  void _toggleItem(int index, bool? value) {
-    final bool newVal = value ?? false;
-    // บังคับจำกัดจำนวน ถ้าพยายามเลือกเพิ่มเมื่อถึง limit ให้แจ้งเตือน
-    if (newVal && selectedCount >= maxSelected) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('คุณไม่สามารถเลือกเกิน $maxSelected งานอดิเรก')),
-      );
-      return;
-    }
-
-    setState(() {
-      _items[index].selected = newVal;
-    });
-  }
-
-  void _addItem() {
-    final text = _controller.text.trim();
-    if (text.isEmpty) return;
-    setState(() {
-      _items.add(HobbyItem(text));
-      _controller.clear();
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Widget _buildList() {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: _items.length,
-      itemBuilder: (context, i) {
-        final item = _items[i];
-        return CheckboxListTile(
-          title: Text(item.name),
-          value: item.selected,
-          onChanged: (v) => _toggleItem(i, v),
-          controlAffinity: ListTileControlAffinity.leading,
-        );
-      },
+    return MaterialApp(
+      title: 'Radio + Provider',
+      home: GenderScreen(),
     );
   }
+}
 
+// State management class
+class GenderProvider with ChangeNotifier {
+  String? _selectedGender;
+
+  String? get selectedGender => _selectedGender;
+
+  void selectGender(String gender) {
+    _selectedGender = gender;
+    notifyListeners(); // ����� UI rebuild
+  }
+
+  void clearGender() {
+    _selectedGender = null;
+    notifyListeners();
+  }
+}
+
+// UI widget
+class GenderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final genderProvider = context.watch<GenderProvider>();  //  ที่สำคัญมีการสังเกตจาก  provider คำนวณ
+
     return Scaffold(
-      appBar: AppBar(title: const Text('เลือกงานอดิเรก (แบบ OOP)')),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            // ช่องเพิ่มรายการใหม่ (optional)
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'เพิ่มงานอดิเรกใหม่',
-                      hintText: 'เช่น วาดรูป, ปลูกต้นไม้',
-                    ),
-                    onSubmitted: (_) => _addItem(),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(onPressed: _addItem, child: const Text('เพิ่ม')),
-              ],
+      appBar: AppBar(title: Text('Radio + Provider')),
+      body: Column(
+        children: [
+          ListTile(
+            title: Text("Male"),
+            leading: Radio<String>(
+              value: "Male",
+              groupValue: genderProvider.selectedGender,
+              onChanged: (value) {
+                genderProvider.selectGender(value!);
+              },
             ),
-            const SizedBox(height: 12),
-
-            // รายการ checkbox (เลื่อนดูได้)
-            Expanded(child: _buildList()),
-
-            const SizedBox(height: 12),
-
-            // ข้อความสรุป + ข้อความเตือน (แยก widget เพื่อความชัดเจน)
-            Text(
-              selectedCount == 0
-                  ? 'กรุณาเลือกงานอดิเรก'
-                  : 'คุณเลือกงานอดิเรกทั้งหมด: $selectedCount',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          ListTile(
+            title: Text("Female"),
+            leading: Radio<String>(
+              value: "Female",
+              groupValue: genderProvider.selectedGender,
+              onChanged: (value) {
+                genderProvider.selectGender(value!);
+              },
             ),
-            if (selectedCount > maxSelected)
-              // กรณีนี้จริง ๆ จะไม่เกิดเพราะเราป้องกันไว้ก่อนหน้า แต่ยังคงใส่ไว้เป็นตัวอย่าง
-              const Padding(
-                padding: EdgeInsets.only(top: 6),
-                child: Text(
-                  'คุณเลือกมากเกินไป',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            const SizedBox(height: 8),
-          ],
-        ),
+          ),
+          SizedBox(height: 20),
+          ListTile(
+            title: Text("other"),
+            leading: Radio<String>(
+              value: "other",
+              groupValue: genderProvider.selectedGender,
+              onChanged: (value) {
+                genderProvider.selectGender(value!);
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            genderProvider.selectedGender == null
+                ? "Please select gender"
+                : "You selected: ${genderProvider.selectedGender}",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () => genderProvider.clearGender(),
+            child: Text("Clear"),
+          ),
+        ],
       ),
     );
   }
